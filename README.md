@@ -66,7 +66,7 @@ You can try out our application through the following interfaces:
 
 - **Streamlit App**: [Streamlit Demo](https://microorganisms.streamlit.app)
 - **Flask App**: [Flask Demo]()
-- **API Documentation**: [FastAPI Docs](https://fast-317097237537.europe-west1.run.app/docs)
+- **API Documentation**: [FastAPI Docs](https://fast-317097237537.europe-west1.run.app/redoc)
 
 ## 🔧 Installation
 
