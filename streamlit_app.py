@@ -11,8 +11,6 @@ st.title("🦠 Microorganisms Classification")
 
 st.info("This app allows you to classify microorganisms based on their features.")
 
-model = pickle.load(open('models/microbe_model.pkl', 'rb'))
-df = pd.read_csv('data/microbes.csv')
 with open('static/microorganism.yaml', 'r') as file:
     microbe_data = yaml.safe_load(file)
 
@@ -43,7 +41,7 @@ with st.form("microbe_form"):
         with col1 if i % 2 == 0 else col2:
             input_values[feature] = st.number_input(
                 label=feature,
-                value=float(df[feature].mean()),
+                value=float(0),
                 help=f"Enter value for {features[feature]}"
             )
     
