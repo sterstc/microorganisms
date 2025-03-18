@@ -7,7 +7,10 @@ RUN pip install --upgrade pip \
 
 COPY models /app/models
 COPY api /app/api
+COPY flask_app.py /app/flask_app.py
+COPY templates /app/templates
+COPY static /app/static
 
 EXPOSE 8000
 
-CMD uvicorn --reload api.app:app --host 0.0.0.0 --port $PORT
+CMD uvicorn api.app:app --host 0.0.0.0 --port $PORT

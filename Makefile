@@ -12,20 +12,20 @@ test_api :
 .PHONY: docker_build docker_run docker_push gcp_build deploy
 
 docker_build:
-	docker build -t ${IMAGE} . --file Dockerfile
+	docker build -t ${IMAGE_FLASK} . --file Dockerfile_flask
 
 docker_run: 
-	docker run -e PORT=${PORT} -p 8000:8080 ${IMAGE}
+	docker run -e PORT=${PORT} -p 8000:8080 ${IMAGE_FLASK}
 
 docker_push:
-	docker push ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}
+	docker push ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_FLASK}
 
 gcp_build:
-	docker build --build-arg TARGETPLATFORM=linux/amd64 -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:latest . --file Dockerfile
-	# docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:latest . --file Dockerfile
+	docker build --build-arg TARGETPLATFORM=linux/amd64 -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_FLASK}:latest . --file Dockerfile_flask
+	# docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_FLASK}:latest . --file Dockerfile_flask
 
-deploy_service:
-	gcloud run deploy ${SERVICE} --image=${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE}:latest \
+deploy_service: 
+	gcloud run deploy ${SERVICE} --image=${LOCATION}-docker.pkg.dev/${PROJECT_ID}/${REPOSITORY}/${IMAGE_FLASK}:latest \
   --platform=managed --region=${LOCATION} --allow-unauthenticated
 
 deploy: gcp_build docker_push deploy_service 

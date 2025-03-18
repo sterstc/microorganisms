@@ -5,3 +5,4 @@ loguru==0.7.3
 streamlit==1.43.2
 pandas==2.2.3
 PyYAML==6.0.2
+flask
