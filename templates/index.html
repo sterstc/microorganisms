@@ -1,84 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prédiction des Micro-organismes</title>
 
-    <title>VIVADATA |California ML</title>
+    <!-- Add a custom CSS style -->
+    <style>
+        /* Set the image as the background */
+        body {
+            background-image: url('https://images.theconversation.com/files/495380/original/file-20221115-11-fz1585.jpg?ixlib=rb-4.1.0&rect=0%2C8%2C6000%2C4137&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip');
+            background-size: cover;  /* Ensures the image covers the entire background */
+            background-position: center;  /* Centers the image */
+            background-repeat: no-repeat;  /* Ensures the image doesn't repeat */
+            color: white;  /* Changes text color to white for contrast */
+            height: 100vh;  /* Makes sure the body takes the full height of the viewport */
+            margin: 0;  /* Removes default margin */
+        }
 
-    <!-- Bootstrap core CSS -->
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+        /* Form container style to make it readable */
+        .container {
+            background: rgba(0, 0, 0, 0.7);  /* Black with 70% opacity for readability */
+            padding: 40px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;  /* Centers the form container */
+            margin-top: 100px;  /* Adds some space from the top */
+        }
 
-    <!-- Custom styles for this template -->
-    <link href="../static/css/jumbotron-narrow.css" rel="stylesheet">
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-  </head>
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
 
-  <body>
+</head>
+<body>
 
     <div class="container">
-      <div class="header clearfix">
-        <h3 class="text-muted">VIVADATA - Flask Demo</h3>
-      </div>
+        <h1>Classification d'un Micro-organisme</h1>
+        <form action="/predict" method="POST">
+            <label for="Area">Area:</label>
+            <input type="number" id="Area" name="Area" step="0.1" required><br><br>
 
-      <div class="jumbotron">
-        <h1>Predicting of California Housing 🏘️</h1>
-        <p class="lead">Fill the needed data to predict the median value!</p>
-        <!-- <p><a class="btn btn-lg btn-success" href="home" role="button">Get started</a></p> -->
-      </div class="form-row">
-        <form action="/predict/" method="post">
-        	<div class="form-row">
-			    <div class="form-group col-md-6">
-			      <label for="MedInc">Median income in block</label>
-			      <input type="number" step="0.01" class="form-control" id="MedInc" name="MedInc" placeholder="Enter Value">
-			    </div>
-			    <div class="form-group col-md-6">
-			      <label for="HouseAge">Median house age in block</label>
-			      <input type="number" step="0.01" class="form-control" id="HouseAge" name="HouseAge" placeholder="Enter Value">
-			    </div>
-			</div>
-			<div class="form-row">
-			    <div class="form-group col-md-6">
-			      <label for="AveRooms">Average number of rooms</label>
-			      <input type="number" step="0.01" class="form-control" id="AveRooms" name="AveRooms" placeholder="Enter Value">
-			    </div>
-			    <div class="form-group col-md-6">
-			      <label for="AveBedrms">Average number of bedrooms</label>
-			      <input type="number" step="0.01" class="form-control" id="AveBedrms" name="AveBedrms" placeholder="Enter Value">
-			    </div>
-			</div>
-			<div class="form-row">
-			    <div class="form-group col-md-6">
-			      <label for="Population">Block population</label>
-			      <input type="number" step="0.01" class="form-control" id="Population" name="Population" placeholder="Enter Value">
-			    </div>
-			    <div class="form-group col-md-6">
-			      <label for="AveOccup">Average house occupancy</label>
-			      <input type="number" step="0.01" class="form-control" id="AveOccup" name="AveOccup" placeholder="Enter Value">
-			    </div>
-			</div>
-			<div class="form-row">
-			    <div class="form-group col-md-6">
-			      <label for="Latitude">House block latitude</label>
-			      <input type="number" step="0.01" class="form-control" id="Latitude" name="Latitude" placeholder="Enter Value">
-			    </div>
-			    <div class="form-group col-md-6">
-			      <label for="Longitude">House block longitude</label>
-			      <input type="number" step="0.01" class="form-control" id="Longitude" name="Longitude" placeholder="Enter Value">
-			    </div>
-			</div>
-		    <button type="submit" class="btn btn-primary">Predict</button>
-		</form>
-		<br>
-      <footer class="footer">
-        <p>&copy; Vivadata 2019</p>
-      </footer>
+            <label for="Perimeter">Perimeter:</label>
+            <input type="number" id="Perimeter" name="Perimeter" step="0.1" required><br><br>
 
-    </div> <!-- /container -->
-  </body>
+            <label for="mMajorAxisLength">Major Axis Length:</label>
+            <input type="number" id="MajorAxisLength" name="MajorAxisLength" step="0.1" required><br><br>
+
+            <label for="MinorAxisLength">Minor Axis Length:</label>
+            <input type="number" id="MinorAxisLength" name="MinorAxisLength" step="0.1" required><br><br>
+
+            <button type="submit">Classer</button>
+        </form>
+    </div>
+
+</body>
 </html>
+
