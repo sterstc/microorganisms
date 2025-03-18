@@ -65,7 +65,7 @@ This project implements a machine learning-based system for classifying microorg
 You can try out our application through the following interfaces:
 
 - **Streamlit App**: [Streamlit Demo](https://microorganisms.streamlit.app)
-- **Flask App**: [Flask Demo]()
+- **Flask App**: [Flask Demo](https://flask-317097237537.europe-west1.run.app)
 - **API Documentation**: [FastAPI Docs](https://fast-317097237537.europe-west1.run.app/redoc)
 
 ## 🔧 Installation
