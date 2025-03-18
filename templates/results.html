@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultat de Prédiction | Vivadata</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+
+        .jumbotron {
+            background-color: #28a745;
+            color: white;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .result-img {
+            max-width: 300px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header clearfix text-center">
+            <h3 class="text-muted">VIVADATA - Résultat de Prédiction</h3>
+        </div>
+
+        <!-- Jumbotron for Result Title -->
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Micro-organisme Prédit: <strong>{{ microbe }}</strong></h1>
+            <h2>Voici l'image associée :</h2>
+        </div>
+
+        <!-- Image and Prediction Result -->
+        <div class="text-center">
+            <img src="{{ image_path }}" alt="Image de {{ microbe }}" class="result-img">
+        </div>
+
+        <!-- Back to Home Button -->
+        <div class="text-center">
+            <a href="/" class="btn btn-primary btn-lg">Retour à la page d'accueil</a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; Vivadata 2025 | Créé par Augustos, Mathos et Jeremis</p>
+        </footer>
+
+    </div> <!-- /container -->
+
+</body>
+
+</html>
+
+
