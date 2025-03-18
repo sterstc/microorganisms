@@ -3,10 +3,13 @@ import pandas as pd
 import pickle
 import os
 import yaml
+import requests
+
+API_URL = "https://fast-317097237537.europe-west1.run.app/predict"
 
 st.title("🦠 Microorganisms Classification")
 
-st.subheader("This app allows you to classify microorganisms based on their features.")
+st.info("This app allows you to classify microorganisms based on their features.")
 
 model = pickle.load(open('models/microbe_model.pkl', 'rb'))
 df = pd.read_csv('data/microbes.csv')
@@ -47,19 +50,20 @@ with st.form("microbe_form"):
     submitted = st.form_submit_button("Classify")
     
 if submitted:
-    input_data = pd.DataFrame([input_values])
-    prediction = model.predict(input_data)
+    response = requests.post(API_URL, json=input_values)
+    prediction = response.json()
+    microbe_name = prediction['class_predicted'][0]
     st.balloons()
-    st.success(f"**Predicted Microorganism:** {prediction[0]}")
-    st.subheader(f"This is a {prediction[0]} !")
+    st.success(f"**Predicted Microorganism:** {microbe_name}")
+    st.subheader(f"This is a {microbe_name} !")
     
     col1, col2 = st.columns([1, 2])
     
     with col1:
-        st.image(f"{images_path}/{prediction[0]}.png", caption=prediction[0])
+        st.image(f"{images_path}/{microbe_name}.png", caption=microbe_name)
     
     with col2:
-        microbe_info = microbe_data['microorganisms'].get(prediction[0], {})
+        microbe_info = microbe_data['microorganisms'].get(microbe_name, {})
         if microbe_info:
             st.markdown("### Microorganism Information")
             st.markdown(f"""
