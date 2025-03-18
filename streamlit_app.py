@@ -20,6 +20,14 @@ features = {
     'MajorAxisLength': 'Length of the major axis of the ellipse that best fits the microorganism',
     'MinorAxisLength': 'Length of the minor axis of the ellipse that best fits the microorganism'
 }
+
+default_values = {
+    'Area': 0.80,
+    'Perimeter': 0.83,
+    'MajorAxisLength': 1.60,
+    'MinorAxisLength': 1.00
+    }
+
 images_path = 'static/img'
 image_files = [f for f in os.listdir(images_path) if f.endswith('.png')][:10]
 
@@ -41,7 +49,7 @@ with st.form("microbe_form"):
         with col1 if i % 2 == 0 else col2:
             input_values[feature] = st.number_input(
                 label=feature,
-                value=float(0),
+                value=default_values[feature],
                 help=f"Enter value for {features[feature]}"
             )
     
