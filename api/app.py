@@ -14,11 +14,8 @@ def read_root():
 def predict(payload: PredictionIn):
     model = load_model(PATH_TO_MODEL)
     logger.info(f"Model loaded from {PATH_TO_MODEL}")
-    area = payload.area
-    perimeter = payload.perimeter
-    major_axis_length = payload.major_axis_length
-    minor_axis_length = payload.minor_axis_length
-    data = pd.DataFrame([[area, perimeter, major_axis_length, minor_axis_length]], columns=['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength'])
+    data = pd.DataFrame([[payload.Area, payload.Perimeter, payload.MajorAxisLength, payload.MinorAxisLength]], 
+                    columns=['Area', 'Perimeter', 'MajorAxisLength', 'MinorAxisLength'])
     prediction = model.predict(data)
     logger.info(f"Prediction: {prediction}")
     return {"class_predicted": prediction.tolist()}
