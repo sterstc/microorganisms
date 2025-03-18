@@ -3,71 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prédiction des Micro-organismes</title>
-
-    <!-- Add a custom CSS style -->
+    <title>Microorganism Classifier</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        /* Set the image as the background */
         body {
-            background-image: url('https://images.theconversation.com/files/495380/original/file-20221115-11-fz1585.jpg?ixlib=rb-4.1.0&rect=0%2C8%2C6000%2C4137&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip');
-            background-size: cover;  /* Ensures the image covers the entire background */
-            background-position: center;  /* Centers the image */
-            background-repeat: no-repeat;  /* Ensures the image doesn't repeat */
-            color: white;  /* Changes text color to white for contrast */
-            height: 100vh;  /* Makes sure the body takes the full height of the viewport */
-            margin: 0;  /* Removes default margin */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.theconversation.com/files/495380/original/file-20221115-11-fz1585.jpg?ixlib=rb-4.1.0&rect=0%2C8%2C6000%2C4137&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
         }
 
-        /* Form container style to make it readable */
         .container {
-            background: rgba(0, 0, 0, 0.7);  /* Black with 70% opacity for readability */
-            padding: 40px;
-            border-radius: 10px;
-            max-width: 600px;
-            margin: 0 auto;  /* Centers the form container */
-            margin-top: 100px;  /* Adds some space from the top */
+            padding-top: 50px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-title {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 15px;
-        }
-        
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+            margin-bottom: 25px;
         }
 
-        button:hover {
-            background-color: #218838;
+        .form-group label {
+            color: #34495e;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #bdc3c7;
+            padding: 12px;
+        }
+
+        .form-control:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-predict {
+            background-color: #2ecc71;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-predict:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-text {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
-
 </head>
 <body>
-
     <div class="container">
-        <h1>Classification d'un Micro-organisme</h1>
-        <form action="/predict" method="POST">
-            <label for="Area">Area:</label>
-            <input type="number" id="Area" name="Area" step="0.1" required><br><br>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <h1 class="text-center form-title">Microorganism Classifier</h1>
+                    <p class="text-center text-muted mb-4">Enter the measurements below to identify the microorganism</p>
+                    
+                    <form action="/predict" method="POST">
+                        <div class="form-group">
+                            <label for="Area">Area (μm²)</label>
+                            <input type="number" class="form-control" id="Area" name="Area" step="0.1" required>
+                            <small class="info-text">The total surface area of the microorganism</small>
+                        </div>
 
-            <label for="Perimeter">Perimeter:</label>
-            <input type="number" id="Perimeter" name="Perimeter" step="0.1" required><br><br>
+                        <div class="form-group">
+                            <label for="Perimeter">Perimeter (μm)</label>
+                            <input type="number" class="form-control" id="Perimeter" name="Perimeter" step="0.1" required>
+                            <small class="info-text">The length of the boundary of the microorganism</small>
+                        </div>
 
-            <label for="mMajorAxisLength">Major Axis Length:</label>
-            <input type="number" id="MajorAxisLength" name="MajorAxisLength" step="0.1" required><br><br>
+                        <div class="form-group">
+                            <label for="MajorAxisLength">Major Axis Length (μm)</label>
+                            <input type="number" class="form-control" id="MajorAxisLength" name="MajorAxisLength" step="0.1" required>
+                            <small class="info-text">The length of the longest axis of the microorganism</small>
+                        </div>
 
-            <label for="MinorAxisLength">Minor Axis Length:</label>
-            <input type="number" id="MinorAxisLength" name="MinorAxisLength" step="0.1" required><br><br>
+                        <div class="form-group">
+                            <label for="MinorAxisLength">Minor Axis Length (μm)</label>
+                            <input type="number" class="form-control" id="MinorAxisLength" name="MinorAxisLength" step="0.1" required>
+                            <small class="info-text">The length of the shortest axis of the microorganism</small>
+                        </div>
 
-            <button type="submit">Classer</button>
-        </form>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-predict btn-lg">Classify Microorganism</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 

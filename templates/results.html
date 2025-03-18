@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résultat de Prédiction | Vivadata</title>
+    <title>Microorganism Classification Result</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -12,30 +12,115 @@
     <!-- Custom styles -->
     <style>
         body {
-            padding-top: 20px;
-            background-color: #f8f9fa;
-        }
-
-        .jumbotron {
-            background-color: #28a745;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                        url('https://images.theconversation.com/files/495380/original/file-20221115-11-fz1585.jpg?ixlib=rb-4.1.0&rect=0%2C8%2C6000%2C4137&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
             color: white;
-        }
-
-        footer {
-            background-color: #343a40;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            margin-top: 20px;
         }
 
         .container {
-            max-width: 800px;
+            padding-top: 50px;
+            padding-bottom: 50px;
         }
 
-        .result-img {
+        .result-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            color: #2c3e50;
+        }
+
+        .result-image {
             max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+        }
+
+        .result-image:hover {
+            transform: scale(1.05);
+        }
+
+        .result-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .prediction-text {
+            font-size: 1.8rem;
+            color: #27ae60;
+            font-weight: 600;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(46, 204, 113, 0.1);
+        }
+
+        .info-section {
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .info-title {
+            color: #2980b9;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .info-content {
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .info-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            background: #e8f4f8;
+            color: #2980b9;
+        }
+
+        .btn-back {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 500;
             border-radius: 8px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-back:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding: 20px 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -43,33 +128,49 @@
 <body>
 
     <div class="container">
-        <!-- Header -->
-        <div class="header clearfix text-center">
-            <h3 class="text-muted">VIVADATA - Résultat de Prédiction</h3>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="result-card">
+                    <h1 class="text-center result-title">Classification Result</h1>
+                    
+                    <div class="prediction-text text-center">
+                        {{ microbe }}
+                    </div>
+
+                    <div class="text-center">
+                        <img src="{{ image_path }}" alt="Image of {{ microbe }}" class="result-image img-fluid">
+                    </div>
+
+                    <div class="info-section">
+                        <h3 class="info-title">About this Microorganism</h3>
+                        <p class="info-content">{{ description }}</p>
+                        
+                        <div class="info-tags">
+                            {% if type %}
+                            <span class="info-tag">
+                                <strong>Type:</strong> {{ type }}
+                            </span>
+                            {% endif %}
+                            
+                            {% if habitat %}
+                            <span class="info-tag">
+                                <strong>Habitat:</strong> {{ habitat }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="/" class="btn btn-back">Classify Another Microorganism</a>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <!-- Jumbotron for Result Title -->
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Micro-organisme Prédit: <strong>{{ microbe }}</strong></h1>
-            <h2>Voici l'image associée :</h2>
-        </div>
-
-        <!-- Image and Prediction Result -->
-        <div class="text-center">
-            <img src="{{ image_path }}" alt="Image de {{ microbe }}" class="result-img">
-        </div>
-
-        <!-- Back to Home Button -->
-        <div class="text-center">
-            <a href="/" class="btn btn-primary btn-lg">Retour à la page d'accueil</a>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <p>&copy; Vivadata 2025 | Créé par Augustos, Mathos et Jeremis</p>
-        </footer>
-
-    </div> <!-- /container -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 
